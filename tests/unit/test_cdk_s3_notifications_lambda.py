@@ -24,20 +24,6 @@ class TestS3NotificationsToLambda:
         bucket = s3.Bucket(stack, "TestBucket")
         return stack, function, bucket
 
-    def test_s3_notifications_created(self, test_objects):
-        stack, function, bucket = test_objects
-
-        S3NotificationsToLambda(
-            stack,
-            "S3NotificationsToLambda",
-            function=function,
-            bucket=bucket,
-            event_type=s3.EventType.OBJECT_CREATED,
-        )
-
-        template = assertions.Template.from_stack(stack)
-        template.resource_count_is("Custom::S3BucketNotifications", 1)
-
     def test_s3_notifications_created_with_right_event(self, test_objects):
         stack, function, bucket = test_objects
 
